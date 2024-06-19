@@ -3,7 +3,7 @@
 __all__ = ["TINTO_PATH",
            "BLANCO_PATH",
            "RESIZE_MAP_RATE",
-           "GPS",
+           "SPAIN_POSITION",
            "DO_VINOS",]
 
 TINTO_PATH = "icons/tinto.ico"
@@ -11,10 +11,7 @@ BLANCO_PATH = "icons/blanco.ico"
 
 RESIZE_MAP_RATE = 1.5
 
-GPS = {"N": 43.803,
-       "S": 35.960,
-       "W": -9.492,
-       "E": 4.395}
+SPAIN_POSITION = (40.416775, -3.703790)  # Geographical center of Spain
 
 DO_VINOS = {
     "Alicante": ((38.3436365, -0.4881708), "Tinto"),

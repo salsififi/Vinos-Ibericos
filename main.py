@@ -35,7 +35,7 @@ class VinosIbericosApp:
     def create_frames(self) -> None:
         """Creates UI frames"""
         self.main_frame = tk.Frame(self.root)
-        self.regions_frame = tk.Frame(self.main_frame)
+        self.regions_frame = tk.Frame(self.main_frame, padx=5)
         self.map_frame = tk.Frame(self.main_frame)
         self.filters_frame = tk.Frame(self.main_frame)
 
@@ -45,17 +45,15 @@ class VinosIbericosApp:
         self.map_frame.grid(row=0, column=1, sticky="nsew")
         self.regions_frame.grid(row=0, column=0, sticky="ns")
         self.filters_frame.grid(row=1, column=1, sticky="ew")
-
-        self.filters_frame.columnconfigure(0, weight=1)
-        self.filters_frame.columnconfigure(1, weight=1)
-        self.filters_frame.columnconfigure(2, weight=1)
-        self.filters_frame.columnconfigure(3, weight=1)
+        for i in range(3):
+            self.filters_frame.columnconfigure(i, weight=1)
 
     def create_widgets(self) -> None:
         """Creates all UI widgets"""
         # Boutons de filtre par région
         for region in DO_VINOS:
             button = tk.Button(self.regions_frame, text=region, bg="white",
+                               width=18, pady=1,
                                command=lambda r=region: self.toggle_bottle(r))
             button.pack(pady=1)
             self.buttons_by_region[region] = button
@@ -79,7 +77,7 @@ class VinosIbericosApp:
         # Carte
         self.map = TkinterMapView(self.map_frame, width=1000)
         self.map.pack(fill="both", expand=True)
-        self.map.set_position(40.416775, -3.703790)  # centre géographique de l'Espagne
+        self.map.set_position(*SPAIN_POSITION)
         self.map.set_zoom(5)
     # endregion
 
@@ -98,10 +96,11 @@ class VinosIbericosApp:
     def show_region(self, region: str) -> None:
         """Places bottle icon of the region on the map"""
         if not self.markers_by_region.get(region):
-            (deg_x, deg_y), wine = DO_VINOS[region]
-            marker = self.map.set_marker(deg_x, deg_y,
-                                         icon=self.tinto if wine == "Tinto" else self.blanco)
+            position, wine = DO_VINOS[region]
+            marker = self.map.set_marker(*position, icon=self.tinto if wine == "Tinto" else self.blanco)
             self.markers_by_region[region] = marker
+            position = DO_VINOS[region][0]
+            self.map.set_position(*position)
 
     def show_wine(self, chosen_wine: str) -> None:
         """Shows only bottles of selected wine"""
@@ -114,6 +113,7 @@ class VinosIbericosApp:
         """Shows all bottle icons"""
         for region in DO_VINOS:
             self.show_region(region)
+        self.map.set_position(*SPAIN_POSITION)
 
     def toggle_bottle(self, region: str) -> None:
         """Displays or hides bottle icon for a given region"""
