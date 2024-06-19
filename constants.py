@@ -1,15 +1,13 @@
 """Constants"""
 
-__all__ = ["MAP_PATH",
-           "TINTO_PATH",
+__all__ = ["TINTO_PATH",
            "BLANCO_PATH",
            "RESIZE_MAP_RATE",
            "GPS",
            "DO_VINOS",]
 
-MAP_PATH = "resources/Espana.png"
-TINTO_PATH = "resources/tinto.ico"
-BLANCO_PATH = "resources/blanco.ico"
+TINTO_PATH = "icons/tinto.ico"
+BLANCO_PATH = "icons/blanco.ico"
 
 RESIZE_MAP_RATE = 1.5
 
