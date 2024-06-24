@@ -86,6 +86,7 @@ class VinosIbericosApp:
         """Deletes all markers from the map"""
         for region in DO_VINOS:
             self.delete_marker(region)
+            self.buttons_by_region[region].config(bg="white")
 
     def delete_marker(self, region: str) -> None:
         """Delete a region marker from the map"""
@@ -113,6 +114,7 @@ class VinosIbericosApp:
         """Shows all bottle icons"""
         for region in DO_VINOS:
             self.show_region(region)
+            self.buttons_by_region[region].config(bg="green")
         self.map.set_position(*SPAIN_POSITION)
 
     def toggle_bottle(self, region: str) -> None:
